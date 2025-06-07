@@ -5,6 +5,7 @@ const startBtn = document.getElementById("start-btn");
 const pauseBtn = document.getElementById("pause-btn");
 const resetBtn = document.getElementById("reset-btn");
 const settingsBtn = document.getElementById("settings-btn");
+const testSoundBtn = document.getElementById("test-sound-btn");
 const settingsModal = document.getElementById("settings-modal");
 const settingsClose = document.getElementById("settings-close");
 const saveSettingsBtn = document.getElementById("save-settings");
@@ -58,10 +59,48 @@ function init() {
   updateProgressRing();
   setTheme(settings.theme);
 
+  // Initialize audio
+  initializeAudio();
+
   // Request notification permission
   if ("Notification" in window) {
     Notification.requestPermission();
   }
+}
+
+// Initialize audio for better browser compatibility
+function initializeAudio() {
+  // Add event listeners for audio loading
+  timerCompleteSound.addEventListener("error", (e) => {
+    console.error("Error loading audio file:", e);
+  });
+
+  // Some browsers require a user interaction before allowing audio playback
+  // We'll preload the audio but set the volume to 0 temporarily
+  timerCompleteSound.load();
+
+  // Create a user interaction handler to enable audio
+  document.addEventListener(
+    "click",
+    function enableAudio() {
+      // Play and immediately pause to enable audio for future programmatic playback
+      timerCompleteSound.volume = 0;
+      timerCompleteSound
+        .play()
+        .then(() => {
+          timerCompleteSound.pause();
+          timerCompleteSound.currentTime = 0;
+          timerCompleteSound.volume = 1;
+          // Remove this listener once audio is enabled
+          document.removeEventListener("click", enableAudio);
+          console.log("Audio enabled after user interaction");
+        })
+        .catch((error) => {
+          console.log("Still cannot play audio:", error);
+        });
+    },
+    { once: false }
+  );
 }
 
 // Timer Functions
@@ -102,9 +141,44 @@ function resetTimer() {
 function completeTimer() {
   pauseTimer();
 
+  // Add visual alert animation
+  const timerContainer = document.querySelector(".timer-container");
+  timerContainer.classList.add("timer-complete-alert");
+
+  // Remove animation after 5 seconds
+  setTimeout(() => {
+    timerContainer.classList.remove("timer-complete-alert");
+  }, 5000);
+
   // Play sound notification if enabled
   if (settings.audioNotifications) {
-    timerCompleteSound.play();
+    // Reset the audio to the beginning and ensure it's ready to play
+    timerCompleteSound.currentTime = 0;
+
+    // Play the sound with error handling
+    const playPromise = timerCompleteSound.play();
+
+    // Handle play() promise to catch any errors
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          // Playback started successfully
+          console.log("Sound played successfully");
+        })
+        .catch((error) => {
+          // Auto-play was prevented or there was another error
+          console.error("Error playing sound:", error);
+
+          // Try again with user interaction if browser policy blocked autoplay
+          if (error.name === "NotAllowedError") {
+            console.log(
+              "Audio playback was prevented by browser policy. User interaction is required."
+            );
+            // We'll show a visual alert instead
+            alert("Timer complete! Click OK to continue.");
+          }
+        });
+    }
   }
 
   // Show browser notification if enabled
@@ -252,11 +326,35 @@ function setTheme(theme) {
 startBtn.addEventListener("click", startTimer);
 pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
+testSoundBtn.addEventListener("click", testSound);
 
 settingsBtn.addEventListener("click", openSettingsModal);
 settingsClose.addEventListener("click", closeSettingsModal);
 saveSettingsBtn.addEventListener("click", saveSettings);
 resetSettingsBtn.addEventListener("click", resetSettingsToDefault);
+
+// Function to test the sound
+function testSound() {
+  // Reset the audio to the beginning
+  timerCompleteSound.currentTime = 0;
+
+  // Play the sound with error handling
+  const playPromise = timerCompleteSound.play();
+
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        console.log("Test sound played successfully");
+      })
+      .catch((error) => {
+        console.error("Error playing test sound:", error);
+        alert(
+          "Could not play sound. This browser might block autoplay. Error: " +
+            error.message
+        );
+      });
+  }
+}
 
 themeToggle.addEventListener("click", toggleThemeOptions);
 themeBtns.forEach((btn) => {

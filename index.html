@@ -38,13 +38,12 @@
                     <circle class="progress-ring-circle" cx="150" cy="150" r="120" />
                 </svg>
             </div>
-        </div>
-
-        <div class="timer-controls">
+        </div>        <div class="timer-controls">
             <button id="start-btn" class="control-btn"><i class="fas fa-play"></i> Start</button>
             <button id="pause-btn" class="control-btn" disabled><i class="fas fa-pause"></i> Pause</button>
             <button id="reset-btn" class="control-btn"><i class="fas fa-redo"></i> Reset</button>
             <button id="settings-btn" class="control-btn"><i class="fas fa-cog"></i> Settings</button>
+            <button id="test-sound-btn" class="control-btn"><i class="fas fa-volume-up"></i> Test Sound</button>
         </div>
 
         <div class="settings-modal" id="settings-modal">
@@ -78,11 +77,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Audio files for notifications -->
-    <audio id="timer-complete" src="assets/sounds/timer-complete.mp3" preload="auto"></audio>
+        </div>    </div>    <!-- Audio files for notifications -->
+    <audio id="timer-complete" preload="auto">
+        <source src="assets/sounds/timer-complete.mp3" type="audio/mpeg">
+        <source src="assets/sounds/timer-complete.wav" type="audio/wav">
+        <!-- Fallback message if audio is not supported -->
+        Your browser does not support the audio element.
+    </audio>
 
     <script src="js/script.js"></script>
 </body>

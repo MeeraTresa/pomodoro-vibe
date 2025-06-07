@@ -162,6 +162,17 @@ h1 {
     transition: stroke-dashoffset 0.5s;
 }
 
+/* Timer Complete Animation */
+@keyframes timer-complete-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 99, 71, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(255, 99, 71, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 99, 71, 0); }
+}
+
+.timer-complete-alert {
+    animation: timer-complete-pulse 1.5s ease-in-out infinite;
+}
+
 /* Timer Controls */
 .timer-controls {
     display: flex;
