@@ -1,0 +1,429 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--container-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+    color: var(--heading-color);
+}
+
+/* Theme Selector */
+.theme-selector {
+    position: relative;
+}
+
+#theme-toggle {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background-color: var(--button-hover);
+}
+
+.theme-options {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: var(--container-bg);
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    min-width: 120px;
+}
+
+.theme-options.show {
+    display: flex;
+}
+
+.theme-btn {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    margin: 2px 0;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text-color);
+    border-radius: 3px;
+}
+
+.theme-btn:hover {
+    background-color: var(--button-hover);
+}
+
+/* Mode Selector */
+.mode-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 10px;
+}
+
+.mode-btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 150px;
+}
+
+.mode-btn:hover {
+    background-color: var(--button-hover);
+}
+
+.mode-btn.active {
+    background-color: var(--accent-color);
+    color: var(--button-text-active);
+}
+
+/* Timer Display */
+.timer-container {
+    position: relative;
+    margin: 30px auto;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-display {
+    position: absolute;
+    font-size: 60px;
+    font-weight: bold;
+    color: var(--heading-color);
+    z-index: 2;
+}
+
+.progress-ring-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.progress-ring-background {
+    fill: transparent;
+    stroke: var(--ring-bg);
+    stroke-width: 12;
+}
+
+.progress-ring-circle {
+    fill: transparent;
+    stroke: var(--accent-color);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dashoffset 0.5s;
+}
+
+/* Timer Controls */
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.control-btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.control-btn:hover {
+    background-color: var(--button-hover);
+}
+
+.control-btn:disabled {
+    background-color: var(--button-disabled);
+    cursor: not-allowed;
+}
+
+#start-btn {
+    background-color: var(--accent-color);
+    color: var(--button-text-active);
+}
+
+#start-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Settings Modal */
+.settings-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-modal.show {
+    display: flex;
+}
+
+.settings-content {
+    position: relative;
+    background-color: var(--container-bg);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.settings-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.settings-form {
+    margin-top: 20px;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.setting-item input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.setting-item.checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.setting-item.checkbox label {
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--button-hover);
+}
+
+#save-settings {
+    background-color: var(--accent-color);
+    color: var(--button-text-active);
+}
+
+#save-settings:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .timer-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .timer-display {
+        font-size: 50px;
+    }
+
+    .control-btn {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mode-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mode-btn {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .timer-container {
+        width: 200px;
+        height: 200px;
+    }
+
+    .timer-display {
+        font-size: 40px;
+    }
+
+    .timer-controls {
+        flex-direction: column;
+    }
+
+    .control-btn {
+        width: 100%;
+    }
+}
+
+/* Theme Variables */
+
+/* Default Theme */
+.theme-default {
+    --bg-color: #f8f9fa;
+    --container-bg: #ffffff;
+    --heading-color: #333333;
+    --text-color: #555555;
+    --accent-color: #ff6347; /* Tomato */
+    --accent-hover: #e55a40;
+    --button-bg: #f0f0f0;
+    --button-hover: #e0e0e0;
+    --button-text: #333333;
+    --button-text-active: #ffffff;
+    --button-disabled: #cccccc;
+    --ring-bg: #f0f0f0;
+    --border-color: #dddddd;
+    --input-bg: #ffffff;
+}
+
+/* Dark Theme */
+.theme-dark {
+    --bg-color: #1e1e1e;
+    --container-bg: #2d2d2d;
+    --heading-color: #e0e0e0;
+    --text-color: #b0b0b0;
+    --accent-color: #7e57c2; /* Purple */
+    --accent-hover: #6a46b0;
+    --button-bg: #3d3d3d;
+    --button-hover: #4d4d4d;
+    --button-text: #e0e0e0;
+    --button-text-active: #ffffff;
+    --button-disabled: #555555;
+    --ring-bg: #3d3d3d;
+    --border-color: #555555;
+    --input-bg: #3d3d3d;
+}
+
+/* Forest Theme */
+.theme-forest {
+    --bg-color: #e8f5e9;
+    --container-bg: #ffffff;
+    --heading-color: #2e7d32;
+    --text-color: #424242;
+    --accent-color: #4caf50; /* Green */
+    --accent-hover: #43a047;
+    --button-bg: #e8f5e9;
+    --button-hover: #c8e6c9;
+    --button-text: #2e7d32;
+    --button-text-active: #ffffff;
+    --button-disabled: #c8e6c9;
+    --ring-bg: #e8f5e9;
+    --border-color: #c8e6c9;
+    --input-bg: #ffffff;
+}
+
+/* Ocean Theme */
+.theme-ocean {
+    --bg-color: #e3f2fd;
+    --container-bg: #ffffff;
+    --heading-color: #1565c0;
+    --text-color: #424242;
+    --accent-color: #2196f3; /* Blue */
+    --accent-hover: #1e88e5;
+    --button-bg: #e3f2fd;
+    --button-hover: #bbdefb;
+    --button-text: #1565c0;
+    --button-text-active: #ffffff;
+    --button-disabled: #bbdefb;
+    --ring-bg: #e3f2fd;
+    --border-color: #bbdefb;
+    --input-bg: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
