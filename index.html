@@ -36,14 +36,13 @@
                 <svg class="progress-ring" width="300" height="300">
                     <circle class="progress-ring-background" cx="150" cy="150" r="120" />
                     <circle class="progress-ring-circle" cx="150" cy="150" r="120" />
-                </svg>
-            </div>
+                </svg>            </div>
         </div>
 
-        <div class="timer-controls">
-            <button id="start-btn" class="control-btn"><i class="fas fa-play"></i> Start</button>
+        <div class="timer-controls">            <button id="start-btn" class="control-btn"><i class="fas fa-play"></i> Start</button>
             <button id="pause-btn" class="control-btn" disabled><i class="fas fa-pause"></i> Pause</button>
             <button id="reset-btn" class="control-btn"><i class="fas fa-redo"></i> Reset</button>
+            <button id="test-sound-btn" class="control-btn"><i class="fas fa-volume-up"></i> Test Sound</button>
             <button id="settings-btn" class="control-btn"><i class="fas fa-cog"></i> Settings</button>
         </div>
 
@@ -75,14 +74,15 @@
                     <div class="setting-item">
                         <button id="save-settings" class="btn">Save Settings</button>
                         <button id="reset-settings" class="btn">Reset to Default</button>
-                    </div>
-                </div>
+                    </div>                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Audio files for notifications -->
-    <audio id="timer-complete" src="assets/sounds/timer-complete.mp3" preload="auto"></audio>
+    </div>    <!-- Audio files for notifications -->
+    <audio id="timer-complete" preload="auto">
+        <source src="assets/sounds/timer-complete.mp3" type="audio/mpeg">
+        <source src="assets/sounds/timer-complete.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
 
     <script src="js/script.js"></script>
 </body>

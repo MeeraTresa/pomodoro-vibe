@@ -6,6 +6,13 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Custom Properties (CSS Variables) */
+:root {
+    --alert-color: rgba(255, 99, 71, 0.7);
+    --alert-color-dark: rgba(255, 99, 71, 0.4);
+    --alert-pulse-scale: 1.05;
+}
+
 body {
     transition: background-color 0.5s ease, color 0.5s ease;
     min-height: 100vh;
@@ -160,6 +167,17 @@ h1 {
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
     transition: stroke-dashoffset 0.5s;
+}
+
+/* Timer Complete Animation */
+@keyframes timer-complete-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 var(--alert-color); }
+    50% { transform: scale(var(--alert-pulse-scale)); box-shadow: 0 0 20px 10px var(--alert-color-dark); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 var(--alert-color); }
+}
+
+.timer-complete-alert {
+    animation: timer-complete-pulse 1.5s infinite;
 }
 
 /* Timer Controls */
