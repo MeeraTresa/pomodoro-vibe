@@ -58,7 +58,7 @@ function init() {
   updateDisplay();
   updateProgressRing();
   setTheme(settings.theme);
-  
+
   // Initialize audio
   initializeAudio();
 
@@ -136,7 +136,10 @@ function playAudio(audioElement, errorMessage = "Timer complete!") {
 
 // Function to test the sound
 function testSound() {
-  playAudio(timerCompleteSound, "Could not play sound. This browser might block autoplay.");
+  playAudio(
+    timerCompleteSound,
+    "Could not play sound. This browser might block autoplay."
+  );
 }
 
 // Timer Functions
